@@ -1,5 +1,8 @@
 [application]
 
+# `build` & `serve` dist path
+platform = "web"
+
 [web.app]
 
 # HTML title tag content
