@@ -21,7 +21,7 @@ fn App() -> Element {
             integrity: "sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib",
             crossorigin: "anonymous"
         }
-        
+
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "stylesheet", href: MAIN_CSS } 
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
@@ -37,15 +37,13 @@ pub fn Hero() -> Element {
     rsx! {
         div {
             id: "hero",
-            img { src: HEADER_SVG, id: "header" }
-            div { id: "links",
-                Math { tex: {rand::rng().random_range(1..=100)} }
-                a { href: "https://dioxuslabs.com/learn/0.6/", "📚 Learn Dioxus" }
-                a { href: "https://dioxuslabs.com/awesome", "🚀 Awesome Dioxus" }
-                a { href: "https://github.com/dioxus-community/", "📡 Community Libraries" }
-                a { href: "https://github.com/DioxusLabs/sdk", "⚙️ Dioxus Development Kit" }
-                a { href: "https://marketplace.visualstudio.com/items?itemName=DioxusLabs.dioxus", "💫 VSCode Extension" }
-                a { href: "https://discord.gg/XgGxMSkvUM", "👋 Community Discord" }
+            img { 
+                src: asset!("/assets/images/dad-penguin.svg"),
+                style: "position: absolute; margin: 0 auto; width: 40rem;",
+            }
+            img { 
+                src: asset!("/assets/images/baby-penguin.svg"),
+                style: "position: absolute; margin: 0 auto; top: 27rem; width: 27rem;",
             }
         }
     }
