@@ -39,11 +39,11 @@ pub fn Hero() -> Element {
             id: "hero",
             img { 
                 src: asset!("/assets/images/dad-penguin.svg"),
-                style: "position: absolute; margin: 0 auto; width: 40rem;",
+                style: "position: absolute; margin: 0 auto; width: 39rem;",
             }
             img { 
                 src: asset!("/assets/images/baby-penguin.svg"),
-                style: "position: absolute; margin: 0 auto; top: 27rem; width: 27rem;",
+                style: "position: absolute; margin: 0 auto; top: 28rem; width: 25rem;",
             }
         }
     }
