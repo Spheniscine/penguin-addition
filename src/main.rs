@@ -32,18 +32,34 @@ fn App() -> Element {
 }
 
 #[component]
-pub fn Hero() -> Element {
-    use rand::Rng;
+pub fn Penguin() -> Element {
     rsx! {
         div {
-            id: "hero",
+            style: "width: 35rem;",
             img { 
                 src: asset!("/assets/images/dad-penguin.svg"),
-                style: "position: absolute; margin: 0 auto; width: 39rem;",
+                style: "position: relative; margin: 0 auto; top: 2rem; width: 34rem;",
             }
             img { 
                 src: asset!("/assets/images/baby-penguin.svg"),
-                style: "position: absolute; margin: 0 auto; top: 28rem; width: 25rem;",
+                style: "position: relative; margin: 0 auto; left: 4.5rem; top: -25rem; width: 25rem;",
+            }
+        }
+    }
+}
+
+#[component]
+pub fn Hero() -> Element {
+    rsx! {
+        div {
+            id: "hero",
+            div {
+                style: "position: absolute; margin: 0 auto; display: flex; flex-direction: row;",
+                Penguin {}
+                Penguin {}
+                Penguin {}
+                Penguin {}
+                Penguin {}
             }
         }
     }
