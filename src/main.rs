@@ -49,17 +49,38 @@ pub fn Penguin() -> Element {
 }
 
 #[component]
+pub fn Penguin2() -> Element {
+    rsx! {
+        div {
+            style: "width: 35rem;",
+            img { 
+                src: asset!("/assets/images/baby-penguin.svg"),
+                style: "position: relative; margin: 0 auto; top: 1rem; left: 4.5rem; width: 25rem;",
+            }
+        }
+    }
+}
+
+#[component]
 pub fn Hero() -> Element {
     rsx! {
         div {
             id: "hero",
             div {
-                style: "position: absolute; margin: 0 auto; display: flex; flex-direction: row;",
+                style: "position: absolute; margin: 0 auto; display: flex; flex-direction: row; height: 54rem;",
                 Penguin {}
                 Penguin {}
                 Penguin {}
                 Penguin {}
                 Penguin {}
+            }
+            div {
+                style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem;",
+                Penguin2 {}
+                Penguin2 {}
+                Penguin2 {}
+                Penguin2 {}
+                Penguin2 {}
             }
         }
     }
