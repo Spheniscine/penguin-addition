@@ -44,6 +44,10 @@ pub fn Penguin() -> Element {
                 src: asset!("/assets/images/baby-penguin.svg"),
                 style: "position: relative; margin: 0 auto; left: 4.5rem; top: -25rem; width: 25rem;",
             }
+            Math { 
+                tex: "5 + 3",
+                style: "color: #000; font-size: 5rem; position: relative; margin: 0 auto; left: 10rem; top: -61rem;",
+            }
         }
     }
 }
@@ -56,6 +60,10 @@ pub fn Penguin2() -> Element {
             img { 
                 src: asset!("/assets/images/baby-penguin.svg"),
                 style: "position: relative; margin: 0 auto; top: 1rem; left: 4.5rem; width: 25rem;",
+            }
+            Math { 
+                tex: "8",
+                style: "color: #000; font-size: 5rem; position: relative; margin: 0 auto; left: -9.5rem; top: -6rem;",
             }
         }
     }
