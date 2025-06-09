@@ -35,7 +35,7 @@ fn App() -> Element {
 pub fn Penguin() -> Element {
     rsx! {
         div {
-            style: "width: 35rem;",
+            style: "position: relative; width: 35rem;",
             img { 
                 src: asset!("/assets/images/dad-penguin.svg"),
                 style: "position: relative; margin: 0 auto; top: 2rem; width: 34rem;",
@@ -46,7 +46,7 @@ pub fn Penguin() -> Element {
             }
             Math { 
                 tex: "5 + 3",
-                style: "color: #000; font-size: 5rem; position: relative; margin: 0 auto; left: 10rem; top: -61rem;",
+                style: "color: #000; font-size: 5rem; position: absolute; margin: 0 auto; left: 10rem; top: 18rem;",
             }
         }
     }
@@ -56,14 +56,14 @@ pub fn Penguin() -> Element {
 pub fn Penguin2() -> Element {
     rsx! {
         div {
-            style: "width: 35rem;",
+            style: "position: relative; width: 35rem;",
             img { 
                 src: asset!("/assets/images/baby-penguin.svg"),
                 style: "position: relative; margin: 0 auto; top: 1rem; left: 4.5rem; width: 25rem;",
             }
             Math { 
                 tex: "8",
-                style: "color: #000; font-size: 5rem; position: relative; margin: 0 auto; left: -9.5rem; top: -6rem;",
+                style: "color: #000; font-size: 5rem; position: absolute; margin: 0 auto; left: 15.5rem; top: 16rem;",
             }
         }
     }
