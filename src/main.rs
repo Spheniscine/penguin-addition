@@ -40,13 +40,17 @@ pub fn Penguin() -> Element {
                 src: asset!("/assets/images/dad-penguin.svg"),
                 style: "position: relative; margin: 0 auto; top: 2rem; width: 34rem;",
             }
-            img { 
-                src: asset!("/assets/images/baby-penguin.svg"),
-                style: "position: relative; margin: 0 auto; left: 4.5rem; top: -25rem; width: 25rem;",
-            }
+            // img { 
+            //     src: asset!("/assets/images/baby-penguin.svg"),
+            //     style: "position: relative; margin: 0 auto; left: 4.5rem; top: -25rem; width: 25rem;",
+            // }
             Math { 
                 tex: "26 + 10",
-                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 18rem; width: 33.5rem;",
+                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 19rem; width: 33.5rem;",
+            }
+            div {
+                style: "position: absolute; width: 35rem; top: 23.5rem;",
+                Penguin2 {}
             }
         }
     }
