@@ -46,7 +46,7 @@ pub fn Penguin() -> Element {
             // }
             Math { 
                 tex: "26 + 10",
-                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 19rem; width: 33.5rem;",
+                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 18.7rem; width: 33.5rem;",
             }
             div {
                 style: "position: absolute; width: 35rem; top: 23.5rem;",
@@ -67,7 +67,7 @@ pub fn Penguin2() -> Element {
             }
             Math { 
                 tex: "36",
-                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 16rem; width: 34rem",
+                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 16.6rem; width: 34rem",
             }
         }
     }
