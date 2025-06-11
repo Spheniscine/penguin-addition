@@ -3083,6 +3083,8 @@ dependencies = [
  "getrandom 0.3.3",
  "katex",
  "rand 0.9.1",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

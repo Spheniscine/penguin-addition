@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 use components::{Hero, Math};
 
 mod components;
+mod game;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const MAIN_CSS: Asset = asset!("/assets/main.css");
