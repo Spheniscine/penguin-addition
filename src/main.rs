@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use components::Math;
+use components::{Hero, Math};
 
 mod components;
 
@@ -31,69 +31,5 @@ fn App() -> Element {
     }
 }
 
-#[component]
-pub fn Penguin() -> Element {
-    rsx! {
-        div {
-            style: "position: relative; width: 35rem;",
-            img { 
-                src: asset!("/assets/images/dad-penguin.svg"),
-                style: "position: relative; margin: 0 auto; top: 2rem; width: 34rem;",
-            }
-            // img { 
-            //     src: asset!("/assets/images/baby-penguin.svg"),
-            //     style: "position: relative; margin: 0 auto; left: 4.5rem; top: -25rem; width: 25rem;",
-            // }
-            Math { 
-                tex: "26 + 10",
-                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 18.7rem; width: 33.5rem;",
-            }
-            div {
-                style: "position: absolute; width: 35rem; top: 23.5rem;",
-                Penguin2 {}
-            }
-        }
-    }
-}
 
-#[component]
-pub fn Penguin2() -> Element {
-    rsx! {
-        div {
-            style: "position: relative; width: 35rem;",
-            img { 
-                src: asset!("/assets/images/baby-penguin.svg"),
-                style: "position: relative; margin: 0 auto; top: 1rem; left: 4.5rem; width: 25rem;",
-            }
-            Math { 
-                tex: "36",
-                style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 16.6rem; width: 34rem",
-            }
-        }
-    }
-}
 
-#[component]
-pub fn Hero() -> Element {
-    rsx! {
-        div {
-            id: "hero",
-            div {
-                style: "position: absolute; margin: 0 auto; display: flex; flex-direction: row; height: 54rem;",
-                Penguin {}
-                Penguin {}
-                Penguin {}
-                Penguin {}
-                Penguin {}
-            }
-            div {
-                style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem;",
-                Penguin2 {}
-                Penguin2 {}
-                Penguin2 {}
-                Penguin2 {}
-                Penguin2 {}
-            }
-        }
-    }
-}
