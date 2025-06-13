@@ -1,7 +1,7 @@
 
 use dioxus::prelude::*;
 
-use crate::{components::{Ball, BallSlot, Bucket}, game::GameState};
+use crate::{components::{Ball, BallSlot, Bucket}, game::{GameState, NUM_BUCKETS}};
 
 #[component]
 pub fn Hero() -> Element {
@@ -14,11 +14,12 @@ pub fn Hero() -> Element {
             id: "hero",
             div {
                 style: "position: absolute; margin: 0 auto; display: flex; flex-direction: row; height: 54rem;",
-                Bucket {}
-                Bucket {}
-                Bucket {}
-                Bucket {}
-                Bucket {}
+                for index in 0..NUM_BUCKETS {
+                    Bucket {
+                        game_state: state,
+                        index
+                    }
+                }
             }
             div {
                 style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem;",

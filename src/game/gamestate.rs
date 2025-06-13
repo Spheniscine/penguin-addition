@@ -6,9 +6,9 @@ use super::{Equation, NUM_BUCKETS};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameState {
-    equations: [Equation; NUM_BUCKETS], // questions for the buckets
-    permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
-    assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
+    pub equations: [Equation; NUM_BUCKETS], // questions for the buckets
+    pub permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
+    pub assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
 }
 
 impl GameState {

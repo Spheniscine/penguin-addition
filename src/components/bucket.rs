@@ -1,9 +1,10 @@
 use dioxus::prelude::*;
 
-use crate::components::{Ball, Math};
+use crate::{components::{Ball, Math}, game::GameState};
 
 #[component]
-pub fn Bucket() -> Element {
+pub fn Bucket(game_state: Signal<GameState>, index: usize) -> Element {
+    let state = game_state();
     rsx! {
         div {
             style: "position: relative; width: 35rem;",
@@ -12,7 +13,7 @@ pub fn Bucket() -> Element {
                 style: "position: relative; margin: 0 auto; top: 2rem; width: 34rem;",
             }
             Math { 
-                tex: "26 + 10",
+                tex: state.equations[index].question.as_str(),
                 style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 18.7rem; width: 33.5rem;",
             }
             div {
