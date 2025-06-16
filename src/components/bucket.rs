@@ -5,6 +5,8 @@ use crate::{components::{Ball, Math}, game::GameState};
 #[component]
 pub fn Bucket(game_state: Signal<GameState>, index: usize) -> Element {
     let state = game_state();
+    let ball = state.assignment[index];
+    let content = ball.map(|i| state.equations[i].answer.clone());
     rsx! {
         div {
             style: "position: relative; width: 35rem;",
@@ -16,10 +18,16 @@ pub fn Bucket(game_state: Signal<GameState>, index: usize) -> Element {
                 tex: state.equations[index].question.as_str(),
                 style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 18.7rem; width: 33.5rem;",
             }
-            // div {
-            //     style: "position: absolute; width: 35rem; top: 23.5rem;",
-            //     Ball {}
-            // }
+
+            if let Some(tex) = content {
+                div {
+                    style: "position: absolute; width: 35rem; top: 23.5rem;",
+                    Ball {
+                        tex
+                    }
+                }
+            }
+            
         }
     }
 }
