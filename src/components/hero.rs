@@ -23,11 +23,12 @@ pub fn Hero() -> Element {
             }
             div {
                 style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem;",
-                BallSlot {}
-                BallSlot {}
-                BallSlot {}
-                BallSlot {}
-                BallSlot {}
+                for index in 0..NUM_BUCKETS {
+                    BallSlot {
+                        game_state: state,
+                        index
+                    }
+                }
             }
         }
     }

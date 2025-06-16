@@ -16,10 +16,10 @@ pub fn Bucket(game_state: Signal<GameState>, index: usize) -> Element {
                 tex: state.equations[index].question.as_str(),
                 style: "color: #000; font-size: 4rem; text-align: center; position: absolute; margin: 0 auto; left: 0rem; top: 18.7rem; width: 33.5rem;",
             }
-            div {
-                style: "position: absolute; width: 35rem; top: 23.5rem;",
-                Ball {}
-            }
+            // div {
+            //     style: "position: absolute; width: 35rem; top: 23.5rem;",
+            //     Ball {}
+            // }
         }
     }
 }
