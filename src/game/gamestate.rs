@@ -9,6 +9,7 @@ pub struct GameState {
     pub equations: [Equation; NUM_BUCKETS], // questions for the buckets
     pub permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
     pub assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
+    pub selected_ball: Option<usize>, // index of selected ball
 }
 
 impl GameState {
@@ -33,6 +34,7 @@ impl GameState {
             equations: equations.into_inner().unwrap(),
             permutation: permutation.into_inner().unwrap(),
             assignment: [None; NUM_BUCKETS],
+            selected_ball: None,
         }
     }
 }
