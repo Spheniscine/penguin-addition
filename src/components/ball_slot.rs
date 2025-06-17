@@ -11,7 +11,7 @@ pub fn BallSlot(game_state: Signal<GameState>, index: usize) -> Element {
         div {
             style: "position: relative; width: 35rem;",
             if visible {
-                Ball { tex: state.equations[i].answer.clone() }
+                Ball { game_state, index: i }
             }
         }
     }

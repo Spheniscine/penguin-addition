@@ -1,9 +1,11 @@
 use dioxus::prelude::*;
 
-use crate::components::Math;
+use crate::{components::Math, game::GameState};
 
 #[component]
-pub fn Ball(tex: String) -> Element {
+pub fn Ball(game_state: Signal<GameState>, index: usize) -> Element {
+    let state = game_state();
+    let tex = state.equations[index].answer.clone();
     rsx! {
         div {
             style: "position: relative; width: 35rem;",
