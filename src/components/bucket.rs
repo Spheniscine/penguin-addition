@@ -6,8 +6,12 @@ use crate::{components::{Ball, Math}, game::GameState};
 pub fn Bucket(game_state: Signal<GameState>, index: usize) -> Element {
     let state = game_state();
     let ball = state.assignment[index];
+    let onclick = move |_ev: Event<MouseData>| {
+        game_state.write().click_bucket(index);
+    };
     rsx! {
         div {
+            onclick,
             style: "position: relative; width: 35rem;",
             img { 
                 src: asset!("/assets/images/dad-penguin.svg"),

@@ -45,4 +45,23 @@ impl GameState {
             self.selected_ball = Some(index);
         }
     } 
+
+    pub fn click_bucket(&mut self, index: usize) {
+        if let Some(ball) = self.selected_ball {
+            for x in &mut self.assignment {
+                if *x == Some(ball) { *x = None; }
+            }
+            self.assignment[index] = Some(ball);
+            self.selected_ball = None;
+        }
+    }
+
+    pub fn click_ball_slot(&mut self) {
+        if let Some(ball) = self.selected_ball {
+            for x in &mut self.assignment {
+                if *x == Some(ball) { *x = None; }
+            }
+            self.selected_ball = None;
+        }
+    }
 }
