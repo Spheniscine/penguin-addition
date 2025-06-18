@@ -37,4 +37,12 @@ impl GameState {
             selected_ball: None,
         }
     }
+
+    pub fn click_ball(&mut self, index: usize) {
+        if self.selected_ball == Some(index) {
+            self.selected_ball = None;
+        } else {
+            self.selected_ball = Some(index);
+        }
+    } 
 }

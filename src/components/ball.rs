@@ -6,12 +6,22 @@ use crate::{components::Math, game::GameState};
 pub fn Ball(game_state: Signal<GameState>, index: usize) -> Element {
     let state = game_state();
     let tex = state.equations[index].answer.clone();
+    let onclick = move |ev: Event<MouseData>| {
+        game_state.write().click_ball(index);
+        ev.stop_propagation();
+    };
+    let selected_background = if state.selected_ball == Some(index) {
+        "filter: drop-shadow(0 0 2rem #ff0);"
+    } else {
+        ""
+    };
     rsx! {
         div {
+            onclick,
             style: "position: relative; width: 35rem;",
             img { 
                 src: asset!("/assets/images/baby-penguin.svg"),
-                style: "position: relative; margin: 0 auto; top: 1rem; left: 4.5rem; width: 25rem;",
+                style: "position: relative; margin: 0 auto; top: 1rem; left: 4.5rem; width: 25rem; {selected_background}",
             }
             Math { 
                 tex,
