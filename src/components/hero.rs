@@ -1,7 +1,7 @@
 
 use dioxus::prelude::*;
 
-use crate::{components::{Ball, BallSlot, Bucket}, game::{GameState, NUM_BUCKETS}};
+use crate::{components::{Ball, BallSlot, Bucket}, game::{GameState, NUM_BUCKETS, DEFAULT_FONT}};
 
 #[component]
 pub fn Hero() -> Element {
@@ -27,6 +27,16 @@ pub fn Hero() -> Element {
                     BallSlot {
                         game_state: state,
                         index
+                    }
+                }
+            }
+            if state.read().should_show_check_button() {
+                div {
+                    style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem;",
+                    button {
+                        r#type: "button",
+                        style: "position: relative; font-size: 5rem; padding: 1.5rem; height: 9rem; font-family: {DEFAULT_FONT}; top: 50%; transform: translateY(-50%);",
+                        "Check"
                     }
                 }
             }

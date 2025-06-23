@@ -64,4 +64,21 @@ impl GameState {
             self.selected_ball = None;
         }
     }
+
+    pub fn should_show_check_button(&self) -> bool {
+        self.assignment.iter().all(|x| x.is_some())
+    }
+
+    pub fn check(&mut self) -> bool {
+        let mut ans = true;
+
+        for i in 0..NUM_BUCKETS {
+            if self.assignment[i] != Some(i) {
+                ans = false;
+                self.assignment[i] = None;
+            }
+        }
+
+        ans
+    }
 }
