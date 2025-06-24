@@ -1,7 +1,7 @@
 
 use dioxus::prelude::*;
 
-use crate::{components::{Ball, BallSlot, Bucket}, game::{GameState, NUM_BUCKETS, DEFAULT_FONT}};
+use crate::{components::{Ball, BallSlot, Bucket}, game::{Audio, Feedback, GameState, DEFAULT_FONT, NUM_BUCKETS}};
 
 #[component]
 pub fn Hero() -> Element {
@@ -11,7 +11,10 @@ pub fn Hero() -> Element {
 
     let click_check = move |_| {
         if state.write().check() {
+            state.read().feedback.play_audio(Audio::Correct);
             *state.write() = GameState::test_generate();
+        } else {
+            state.read().feedback.play_audio(Audio::Wrong);
         }
     };
 

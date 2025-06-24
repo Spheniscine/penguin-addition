@@ -2,7 +2,7 @@ use arrayvec::ArrayVec;
 use rand::{rng, seq::SliceRandom};
 use serde::{Deserialize, Serialize};
 
-use super::{Equation, NUM_BUCKETS};
+use super::{Equation, FeedbackImpl, NUM_BUCKETS};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameState {
@@ -10,6 +10,7 @@ pub struct GameState {
     pub permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
     pub assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
     pub selected_ball: Option<usize>, // index of selected ball
+    pub feedback: FeedbackImpl,
 }
 
 impl GameState {
@@ -35,6 +36,7 @@ impl GameState {
             permutation: permutation.into_inner().unwrap(),
             assignment: [None; NUM_BUCKETS],
             selected_ball: None,
+            feedback: FeedbackImpl { audio_state: 1., prev_audio_state: 1. },
         }
     }
 
