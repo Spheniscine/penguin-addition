@@ -9,6 +9,12 @@ pub fn Hero() -> Element {
         GameState::test_generate()
     });
 
+    let click_check = move |_| {
+        if state.write().check() {
+            *state.write() = GameState::test_generate();
+        }
+    };
+
     rsx! {
         div {
             id: "hero",
@@ -35,6 +41,7 @@ pub fn Hero() -> Element {
                     style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem;",
                     button {
                         r#type: "button",
+                        onclick: click_check,
                         style: "position: relative; font-size: 5rem; padding: 1.5rem; height: 9rem; font-family: {DEFAULT_FONT}; top: 50%; transform: translateY(-50%);",
                         "Check"
                     }
