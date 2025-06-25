@@ -1,7 +1,7 @@
 
 use dioxus::prelude::*;
 
-use crate::{components::{Ball, BallSlot, Bucket}, game::{Audio, Feedback, GameState, DEFAULT_FONT, NUM_BUCKETS}};
+use crate::{components::{AudioPreloader, Ball, BallSlot, Bucket}, game::{Audio, Feedback, GameState, DEFAULT_FONT, NUM_BUCKETS}};
 
 #[component]
 pub fn Hero() -> Element {
@@ -19,6 +19,7 @@ pub fn Hero() -> Element {
     };
 
     rsx! {
+        AudioPreloader {  }
         div {
             id: "hero",
             div {
