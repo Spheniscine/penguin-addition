@@ -4,6 +4,7 @@
 platform = "web"
 
 [web.app]
+base_path = "penguin-addition"
 
 # HTML title tag content
 title = "penguin-addition"
