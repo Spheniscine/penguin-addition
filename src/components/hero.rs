@@ -12,10 +12,14 @@ pub fn Hero() -> Element {
     let click_check = move |_| {
         if state.write().check() {
             state.read().feedback.play_audio(Audio::Correct);
-            *state.write() = GameState::test_generate();
+            state.write().is_won = true;
         } else {
             state.read().feedback.play_audio(Audio::Wrong);
         }
+    };
+
+    let advance = move |_| {
+        *state.write() = GameState::test_generate();
     };
 
     rsx! {
@@ -49,6 +53,26 @@ pub fn Hero() -> Element {
                         style: "position: relative; font-size: 5rem; padding: 1.5rem; height: 9rem; font-family: {DEFAULT_FONT}; top: 50%; transform: translateY(-50%);",
                         "Check"
                     }
+                }
+            }
+            if state.read().is_won {
+                div {
+                    style: "position: absolute; top: 54rem; margin: 0 auto; display: flex; flex-direction: row; height: 30rem; text-align: center;",
+                    div {
+                        style: "position: relative; font-size: 5rem; height: 9rem; top: 30%; transform: translateY(-50%);",
+
+                        p {
+                            style: "padding: 1.5rem; height: 7rem;",
+                            "Well done!"
+                        }
+                        button {
+                            r#type: "button",
+                            onclick: advance,
+                            style: "font-family: {DEFAULT_FONT}; font-size: 5rem; padding: 1.5rem; height: 9rem;",
+                            "Continue"
+                        }
+                    }
+                    
                 }
             }
         }

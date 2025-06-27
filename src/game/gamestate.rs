@@ -11,6 +11,7 @@ pub struct GameState {
     pub assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
     pub selected_ball: Option<usize>, // index of selected ball
     pub feedback: FeedbackImpl,
+    pub is_won: bool,
 }
 
 impl GameState {
@@ -37,6 +38,7 @@ impl GameState {
             assignment: [None; NUM_BUCKETS],
             selected_ball: None,
             feedback: FeedbackImpl { audio_state: 1., prev_audio_state: 1. },
+            is_won: false,
         }
     }
 
@@ -68,7 +70,7 @@ impl GameState {
     }
 
     pub fn should_show_check_button(&self) -> bool {
-        self.assignment.iter().all(|x| x.is_some())
+        !self.is_won && self.assignment.iter().all(|x| x.is_some())
     }
 
     pub fn check(&mut self) -> bool {
