@@ -13,5 +13,8 @@ pub use ball_slot::BallSlot;
 mod audio_preloader;
 pub use audio_preloader::AudioPreloader;
 
+mod settings;
+pub use settings::Settings;
+
 mod hero;
 pub use hero::Hero;

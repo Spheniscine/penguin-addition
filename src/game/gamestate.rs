@@ -2,16 +2,24 @@ use arrayvec::ArrayVec;
 use rand::{rng, seq::SliceRandom};
 use serde::{Deserialize, Serialize};
 
-use super::{Equation, FeedbackImpl, NUM_BUCKETS};
+use super::{Difficulty, Equation, FeedbackImpl, NUM_BUCKETS};
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub enum ScreenState {
+    Game, Settings, Help
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameState {
+    pub difficulty: Difficulty,
     pub equations: [Equation; NUM_BUCKETS], // questions for the buckets
     pub permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
     pub assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
     pub selected_ball: Option<usize>, // index of selected ball
     pub feedback: FeedbackImpl,
     pub is_won: bool,
+    pub screen_state: ScreenState,
+    pub settings_cancelable: bool,
 }
 
 impl GameState {
@@ -33,12 +41,15 @@ impl GameState {
         permutation.shuffle(rng);
 
         Self {
+            difficulty: Difficulty::default(),
             equations: equations.into_inner().unwrap(),
             permutation: permutation.into_inner().unwrap(),
             assignment: [None; NUM_BUCKETS],
             selected_ball: None,
             feedback: FeedbackImpl { audio_state: 1., prev_audio_state: 1. },
             is_won: false,
+            screen_state: ScreenState::Settings,
+            settings_cancelable: false,
         }
     }
 
