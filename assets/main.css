@@ -52,6 +52,27 @@ body {
     background-color: #1f1f1f;
     cursor: pointer;
 }
+
+.radio-buttons input[type="radio"] {
+    display: none;
+}
+
+.radio-buttons span {
+    display: inline-block;
+    margin: 0.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border: 0.5rem solid #0063B1;
+    border-radius: 2rem;
+    cursor: pointer;
+    min-width: 8.5rem;
+    text-align: center;
+}
+
+.radio-buttons input[type="radio"]:checked + span {
+    background-color: #0063B1;
+    color: #fff;
+}
 /* 
 #header {
     max-width: 1200px;

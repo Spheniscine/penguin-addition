@@ -23,15 +23,15 @@ impl Difficulty {
 }
 
 impl Difficulty {
-    pub fn to_map(&self) -> IndexMap<&str, String> {
+    pub fn to_map(&self) -> IndexMap<String, String> {
         indexmap! {
-            Self::STR_OPERATOR => self.operator.to_string(),
-            Self::STR_MAX_RESULT => self.max_result.to_string(),
-            Self::STR_ADDEND_RANGE => format!("{},{}", self.min_addend, self.max_addend),
+            Self::STR_OPERATOR.into() => self.operator.to_string(),
+            Self::STR_MAX_RESULT.into() => self.max_result.to_string(),
+            Self::STR_ADDEND_RANGE.into() => format!("{},{}", self.min_addend, self.max_addend),
         }
     }
 
-    pub fn from_map(map: &IndexMap<&str, String>) -> Option<Self> {
+    pub fn from_map(map: &IndexMap<String, String>) -> Option<Self> {
         let max_result = map.get(Self::STR_MAX_RESULT)?.parse::<i32>().ok()?;
         let mut addends = map.get(Self::STR_ADDEND_RANGE)?.split(',');
         let min_addend = addends.next()?.parse::<i32>().ok()?;

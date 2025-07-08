@@ -2,7 +2,7 @@ use arrayvec::ArrayVec;
 use rand::{rng, seq::SliceRandom};
 use serde::{Deserialize, Serialize};
 
-use super::{Difficulty, Equation, FeedbackImpl, NUM_BUCKETS};
+use super::{Difficulty, Equation, Feedback, FeedbackImpl, SettingsState, NUM_BUCKETS};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum ScreenState {
@@ -95,5 +95,13 @@ impl GameState {
         }
 
         ans
+    }
+
+    pub fn get_settings_state(&self) -> SettingsState {
+        SettingsState {
+            difficulty_options: self.difficulty.to_map(),
+            audio_state: (self.feedback.get_audio_state() * 100.).round() as i32,
+            reset_level: false,
+        }
     }
 }

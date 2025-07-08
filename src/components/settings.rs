@@ -1,7 +1,7 @@
 use dioxus::{logger::tracing, prelude::*};
 use strum::IntoEnumIterator;
 
-use crate::game::{Difficulty, Feedback, GameState, Operator};
+use crate::game::{Difficulty, Feedback, GameState, Operator, SettingsState};
 
 #[component]
 pub fn Settings(game_state: Signal<GameState>) -> Element {
@@ -55,92 +55,81 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
         }
         div {
             id: "settingsDialog",
-            style: "margin: 1.5%; padding: 5rem; width: 91.5%; height: 85%; background-color: #ccc; font-size: 5rem; line-height: 10rem;
+            style: "margin: 1.5%; padding: 5rem; width: 91.5%; height: 85%; background-color: #ccc; font-size: 5rem;
+                line-height: 9rem;
                 color: #000; border-radius: 2rem;",
             tabindex: -1,
             onmounted: onmounted,
             onkeydown: onkeydown,
 
             p {
+                class: "radio-buttons",
                 "Operation:",
                 for op in Operator::iter() {
-                    " ",
-                    input {
-                        r#type: "radio",
-                        style: "width: 4rem; height: 4rem;",
-                        id: "operator_{op}",
-                        name: "operator",
-                        value: "{op}",
-                    },
+                    " ",
                     label {
-                        r#for: "operator_{op}",
-                        " {op}",
+                        input {
+                            r#type: "radio",
+                            name: Difficulty::STR_OPERATOR,
+                            value: "{op}",
+                        },
+                        span { "{op}" },
                     },
                 }
             },
 
             p {
+                class: "radio-buttons",
                 "Up to:",
                 for &mx in Difficulty::RESULT_MAXES {
-                    " ",
-                    input {
-                        r#type: "radio",
-                        style: "width: 4rem; height: 4rem;",
-                        id: "max_result_{mx}",
-                        name: "max_result",
-                        value: "{mx}",
-                    },
+                    " ",
                     label {
-                        r#for: "max_result_{mx}",
-                        " {mx}",
+                        input {
+                            r#type: "radio",
+                            name: Difficulty::STR_MAX_RESULT,
+                            value: "{mx}",
+                        },
+                        span { "{mx}" },
                     },
                 }
             }
 
             p {
+                class: "radio-buttons",
                 "Add how many:",
                 br {},
                 for x in 1..=10 {
-                    " ",
-                    input {
-                        r#type: "radio",
-                        style: "width: 4rem; height: 4rem;",
-                        id: "addend_range_{x}",
-                        name: "addend_range",
-                        value: "{x},{x}",
-                    },
+                    " ",
                     label {
-                        r#for: "addend_range_{x}",
-                        " +{x}",
+                        input {
+                            r#type: "radio",
+                            name: Difficulty::STR_ADDEND_RANGE,
+                            value: "{x},{x}",
+                        },
+                        span { "+{x}" },
                     },
                 }
 
                 br {},
 
-                " ",
-                input {
-                    r#type: "radio",
-                    style: "width: 4rem; height: 4rem;",
-                    id: "addend_range_1_5",
-                    name: "addend_range",
-                    value: "1,5",
-                },
+                " ",
                 label {
-                    r#for: "addend_range_1_5",
-                    " Add 1 to 5",
+                    input {
+                        r#type: "radio",
+                        name: Difficulty::STR_ADDEND_RANGE,
+                        value: "1,5",
+                    },
+                    span { "Add 1 to 5" },
                 },
 
-                " ",
-                input {
-                    r#type: "radio",
-                    style: "width: 4rem; height: 4rem;",
-                    id: "addend_range_1_10",
-                    name: "addend_range",
-                    value: "1,10",
-                },
+                " ",
                 label {
-                    r#for: "addend_range_1_10",
-                    " Add 1 to 10",
+                    input {
+                        r#type: "radio",
+                        name: Difficulty::STR_ADDEND_RANGE,
+                        value: "1,10",
+                    },
+                    span { "Add 1 to 10" },
                 },
             }
             
