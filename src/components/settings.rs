@@ -1,7 +1,33 @@
+use std::rc::Rc;
+
 use dioxus::{logger::tracing, prelude::*};
 use strum::IntoEnumIterator;
 
 use crate::game::{Difficulty, Feedback, GameState, Operator, SettingsState};
+
+#[component]
+pub fn RadioButton(settings_state: Signal<SettingsState>, name: String, value: String, children: Element) -> Element {
+    let checked = settings_state.read().difficulty_options.get(&name) == Some(&value);
+
+    let name_ref = name.clone(); let value_ref = value.clone();
+    let onchange = move |_| {
+        settings_state.write().difficulty_options.insert(name_ref.to_string(), value_ref.to_string());
+    };
+    rsx! {
+        label {
+            input {
+                r#type: "radio",
+                onchange,
+                name: {name.to_string()},
+                value: {value.to_string()},
+                checked,
+            },
+            span { 
+                {children}
+            },
+        },
+    }
+}
 
 #[component]
 pub fn Settings(game_state: Signal<GameState>) -> Element {
@@ -24,6 +50,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
     //     state.write().audio_state = evt.value().parse().unwrap_or(100);
     // };
 
+    let settings_state = use_signal(|| game_state.read().get_settings_state());
     let mut ok = move |_| {
         // game_state.write().apply_settings(&state.read());
         // game_state.write().screen_state = 
@@ -67,14 +94,13 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 "Operation:",
                 for op in Operator::iter() {
                     " ",
-                    label {
-                        input {
-                            r#type: "radio",
-                            name: Difficulty::STR_OPERATOR,
-                            value: "{op}",
-                        },
-                        span { "{op}" },
-                    },
+
+                    RadioButton {  
+                        settings_state,
+                        name: Difficulty::STR_OPERATOR,
+                        value: "{op}",
+                        "{op}",
+                    }
                 }
             },
 
