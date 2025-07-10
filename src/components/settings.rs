@@ -94,13 +94,12 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 "Operation:",
                 for op in Operator::iter() {
                     " ",
-
                     RadioButton {  
                         settings_state,
                         name: Difficulty::STR_OPERATOR,
                         value: "{op}",
                         "{op}",
-                    }
+                    },
                 }
             },
 
@@ -109,13 +108,11 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 "Up to:",
                 for &mx in Difficulty::RESULT_MAXES {
                     " ",
-                    label {
-                        input {
-                            r#type: "radio",
-                            name: Difficulty::STR_MAX_RESULT,
-                            value: "{mx}",
-                        },
-                        span { "{mx}" },
+                    RadioButton {  
+                        settings_state,
+                        name: Difficulty::STR_MAX_RESULT,
+                        value: "{mx}",
+                        "{mx}",
                     },
                 }
             }
@@ -126,13 +123,11 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 br {},
                 for x in 1..=10 {
                     " ",
-                    label {
-                        input {
-                            r#type: "radio",
-                            name: Difficulty::STR_ADDEND_RANGE,
-                            value: "{x},{x}",
-                        },
-                        span { "+{x}" },
+                    RadioButton {  
+                        settings_state,
+                        name: Difficulty::STR_ADDEND_RANGE,
+                        value: "{x},{x}",
+                        "+{x}",
                     },
                 }
 
@@ -140,22 +135,22 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
 
                 " ",
                 label {
-                    input {
-                        r#type: "radio",
+                    RadioButton {  
+                        settings_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "1,5",
+                        "Add 1 to 5",
                     },
-                    span { "Add 1 to 5" },
                 },
 
                 " ",
                 label {
-                    input {
-                        r#type: "radio",
+                     RadioButton {  
+                        settings_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "1,10",
+                        "Add 1 to 10",
                     },
-                    span { "Add 1 to 10" },
                 },
             }
             
