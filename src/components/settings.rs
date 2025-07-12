@@ -6,12 +6,15 @@ use strum::IntoEnumIterator;
 use crate::game::{Difficulty, Feedback, GameState, Operator, SettingsState};
 
 #[component]
-pub fn RadioButton(settings_state: Signal<SettingsState>, name: String, value: String, children: Element) -> Element {
-    let checked = settings_state.read().difficulty_options.get(&name) == Some(&value);
+pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, name: String, value: String, children: Element) -> Element {
+    let checked = state.read().difficulty_options.get(&name) == Some(&value);
 
     let name_ref = name.clone(); let value_ref = value.clone();
     let onchange = move |_| {
-        settings_state.write().difficulty_options.insert(name_ref.to_string(), value_ref.to_string());
+        state.write().difficulty_options.insert(name_ref.to_string(), value_ref.to_string());
+        if state.read().difficulty_options != game_state.read().difficulty.to_map() {
+            state.write().reset_level = true;
+        }
     };
     rsx! {
         label {
@@ -50,13 +53,17 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
     //     state.write().audio_state = evt.value().parse().unwrap_or(100);
     // };
 
-    let settings_state = use_signal(|| game_state.read().get_settings_state());
+    let mut state = use_signal(|| game_state.read().get_settings_state());
     let mut ok = move |_| {
         // game_state.write().apply_settings(&state.read());
         // game_state.write().screen_state = 
     };
     let mut cancel = move |_| {
         // game_state.write().show_settings = false;
+    };
+
+    let reset_level_changed = move |evt: Event<FormData>| {
+        state.write().reset_level = evt.checked();
     };
 
     let mut onmounted = async move |e: Event<MountedData>| {
@@ -95,7 +102,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 for op in Operator::iter() {
                     " ",
                     RadioButton {  
-                        settings_state,
+                        state, game_state,
                         name: Difficulty::STR_OPERATOR,
                         value: "{op}",
                         "{op}",
@@ -109,7 +116,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 for &mx in Difficulty::RESULT_MAXES {
                     " ",
                     RadioButton {  
-                        settings_state,
+                        state, game_state,
                         name: Difficulty::STR_MAX_RESULT,
                         value: "{mx}",
                         "{mx}",
@@ -124,7 +131,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 for x in 1..=10 {
                     " ",
                     RadioButton {  
-                        settings_state,
+                        state, game_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "{x},{x}",
                         "+{x}",
@@ -136,7 +143,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 " ",
                 label {
                     RadioButton {  
-                        settings_state,
+                        state, game_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "1,5",
                         "Add 1 to 5",
@@ -146,7 +153,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 " ",
                 label {
                      RadioButton {  
-                        settings_state,
+                        state, game_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "1,10",
                         "Add 1 to 10",
@@ -160,9 +167,9 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 input {
                     r#type: "checkbox",
                     style: "width: 4rem; height: 4rem;",
-                    // checked: state.read().reset_level,
-                    // disabled: state.read().difficulty != game_state.read().difficulty,
-                    // onchange: reset_level_changed
+                    checked: state.read().reset_level,
+                    disabled: state.read().difficulty_options != game_state.read().difficulty.to_map(),
+                    onchange: reset_level_changed
                 }
             },
 
