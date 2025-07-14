@@ -12,6 +12,11 @@ pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, 
     let name_ref = name.clone(); let value_ref = value.clone();
     let onchange = move |_| {
         state.write().difficulty_options.insert(name_ref.to_string(), value_ref.to_string());
+        let addend_limit = state.read().addend_limit();
+        let max_addend = state.read().difficulty_options[Difficulty::STR_ADDEND_RANGE].rsplit(',').next().unwrap().parse::<i32>().unwrap();
+        if max_addend > addend_limit { 
+            state.write().difficulty_options.insert(Difficulty::STR_ADDEND_RANGE.into(), "1,1".into());
+        }
         if state.read().difficulty_options != game_state.read().difficulty.to_map() {
             state.write().reset_level = true;
         }
@@ -83,6 +88,11 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
         }
     };
 
+    let is_plus = state.read().difficulty_options[Difficulty::STR_OPERATOR] == "Plus";
+    let op_sign = if is_plus {"+"} else {"−"};
+    let op_verb = if is_plus {"Add"} else {"Subtract"};
+    let addend_limit = state.read().addend_limit();
+
     rsx! {
         style {
             "#settingsDialog:focus {{ outline: none; }}"
@@ -126,15 +136,15 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
 
             p {
                 class: "radio-buttons",
-                "Add how many:",
+                "{op_verb} how many:",
                 br {},
-                for x in 1..=10 {
+                for x in 1..=addend_limit {
                     " ",
                     RadioButton {  
                         state, game_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "{x},{x}",
-                        "+{x}",
+                        "{op_sign}{x}",
                     },
                 }
 
@@ -146,19 +156,21 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                         state, game_state,
                         name: Difficulty::STR_ADDEND_RANGE,
                         value: "1,5",
-                        "Add 1 to 5",
+                        "{op_verb} 1 to 5",
                     },
                 },
 
-                " ",
-                label {
-                     RadioButton {  
-                        state, game_state,
-                        name: Difficulty::STR_ADDEND_RANGE,
-                        value: "1,10",
-                        "Add 1 to 10",
+                if addend_limit >= 10 {
+                    " ",
+                    label {
+                        RadioButton {  
+                            state, game_state,
+                            name: Difficulty::STR_ADDEND_RANGE,
+                            value: "1,10",
+                            "{op_verb} 1 to 10",
+                        },
                     },
-                },
+                }
             }
             
 
