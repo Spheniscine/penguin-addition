@@ -178,7 +178,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                     r#type: "checkbox",
                     style: "width: 4rem; height: 4rem;",
                     checked: state.read().reset_level,
-                    disabled: state.read().difficulty_options != game_state.read().difficulty.to_map(),
+                    disabled: !game_state.read().settings_cancelable || state.read().difficulty_options != game_state.read().difficulty.to_map(),
                     onchange: reset_level_changed
                 }
             },
@@ -202,13 +202,15 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                     onclick: ok,
                     "OK"
                 },
-                " ",
-                button {
-                    r#type: "button",
-                    style: "width: 20rem; font-size: 5rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;",
-                    onclick: cancel,
-                    "Cancel"
-                },
+                if game_state.read().settings_cancelable {
+                    " ",
+                    button {
+                        r#type: "button",
+                        style: "width: 20rem; font-size: 5rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;",
+                        onclick: cancel,
+                        "Cancel"
+                    },
+                }
             },
 
             p {

@@ -101,7 +101,7 @@ impl GameState {
         SettingsState {
             difficulty_options: self.difficulty.to_map(),
             audio_state: (self.feedback.get_audio_state() * 100.).round() as i32,
-            reset_level: false,
+            reset_level: !self.settings_cancelable,
         }
     }
 }
