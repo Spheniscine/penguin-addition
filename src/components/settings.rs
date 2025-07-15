@@ -3,7 +3,7 @@ use std::rc::Rc;
 use dioxus::{logger::tracing, prelude::*};
 use strum::IntoEnumIterator;
 
-use crate::game::{Difficulty, Feedback, GameState, Operator, SettingsState};
+use crate::game::{Difficulty, Feedback, GameState, Operator, ScreenState, SettingsState};
 
 #[component]
 pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, name: String, value: String, children: Element) -> Element {
@@ -40,14 +40,7 @@ pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, 
 #[component]
 pub fn Settings(game_state: Signal<GameState>) -> Element {
 
-    let mut state = use_signal(|| game_state.read().get_settings_state());;
-
-    // let mut difficulty_changed = move |evt: Event<FormData>| {
-    //     state.write().difficulty = evt.value().parse().unwrap_or(Difficulty::Easy);
-    //     if state.read().difficulty != game_state.read().difficulty {
-    //         state.write().reset_level = true;
-    //     }
-    // };
+    let mut state = use_signal(|| game_state.read().get_settings_state());
 
     let reset_level_changed = move |evt: Event<FormData>| {
         state.write().reset_level = evt.checked();
@@ -58,8 +51,8 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
     };
     
     let mut ok = move |_| {
-        // game_state.write().apply_settings(&state.read());
-        // game_state.write().screen_state = 
+        game_state.write().apply_settings(state.read().clone());
+        game_state.write().screen_state = ScreenState::Game;
     };
     let mut cancel = move |_| {
         // game_state.write().show_settings = false;

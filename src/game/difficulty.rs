@@ -2,12 +2,12 @@ use indexmap::{IndexMap, indexmap};
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumIter, EnumString};
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, EnumIter, Display, EnumString)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, EnumIter, Display, EnumString, PartialEq, Eq)]
 pub enum Operator {
     Plus, Minus
 }
 
-#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Difficulty {
     pub max_result: i32,
     pub min_addend: i32,

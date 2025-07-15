@@ -19,7 +19,8 @@ pub fn Hero() -> Element {
     };
 
     let advance = move |_| {
-        *state.write() = GameState::test_generate();
+        let difficulty = state.read().difficulty;
+        state.write().generate(difficulty);
     };
 
     rsx! {
