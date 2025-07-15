@@ -39,9 +39,8 @@ pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, 
 
 #[component]
 pub fn Settings(game_state: Signal<GameState>) -> Element {
-    // let mut state = use_signal(|| {
-    //     game_state.read().new_settings_state()
-    // });
+
+    let mut state = use_signal(|| game_state.read().get_settings_state());;
 
     // let mut difficulty_changed = move |evt: Event<FormData>| {
     //     state.write().difficulty = evt.value().parse().unwrap_or(Difficulty::Easy);
@@ -50,15 +49,14 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
     //     }
     // };
 
-    // let reset_level_changed = move |evt: Event<FormData>| {
-    //     state.write().reset_level = evt.checked();
-    // };
+    let reset_level_changed = move |evt: Event<FormData>| {
+        state.write().reset_level = evt.checked();
+    };
 
-    // let audio_settings_changed = move |evt: Event<FormData>| {
-    //     state.write().audio_state = evt.value().parse().unwrap_or(100);
-    // };
-
-    let mut state = use_signal(|| game_state.read().get_settings_state());
+    let audio_settings_changed = move |evt: Event<FormData>| {
+        state.write().audio_state = evt.value().parse().unwrap_or(100);
+    };
+    
     let mut ok = move |_| {
         // game_state.write().apply_settings(&state.read());
         // game_state.write().screen_state = 
@@ -191,10 +189,10 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                     r#type: "range",
                     style: "width: 50rem; height: 4rem;",
                     min: 0, max: 100, step: 5, 
-                    // value: state.read().audio_state,
-                    // oninput: audio_settings_changed
+                    value: state.read().audio_state,
+                    oninput: audio_settings_changed
                 },
-                // " {state.read().audio_state}",
+                " {state.read().audio_state}",
             },
 
             p { 
