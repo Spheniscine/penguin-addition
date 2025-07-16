@@ -155,4 +155,9 @@ impl GameState {
         self.equations = equations.into_inner().unwrap();
         self.permutation = permutation.into_inner().unwrap();
     }
+
+    pub fn toggle_audio(&mut self) {
+        self.feedback.toggle_audio();
+        // LocalStorage.save_game_state(&self);
+    }
 }
