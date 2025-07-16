@@ -55,7 +55,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
         game_state.write().screen_state = ScreenState::Game;
     };
     let mut cancel = move |_| {
-        // game_state.write().show_settings = false;
+        game_state.write().screen_state = ScreenState::Game;
     };
 
     let reset_level_changed = move |evt: Event<FormData>| {
@@ -69,11 +69,13 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
         let key = e.key();
         match key {
             Key::Enter => {
-                // game_state.write().apply_settings(&state.read());
-                // game_state.write().show_settings = false;
+                game_state.write().apply_settings(state.read().clone());
+                game_state.write().screen_state = ScreenState::Game;
             }
             Key::Escape => {
-                // game_state.write().show_settings = false;
+                if game_state.read().settings_cancelable {
+                    game_state.write().screen_state = ScreenState::Game;
+                }
             }
             _ => {}
         }
