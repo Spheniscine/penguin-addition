@@ -32,40 +32,38 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
         div {
             id: "helpDialog",
             style: "margin: 1.5%; padding: 5rem; width: 91.5%; height: 85%; background-color: #ccc; font-size: 5rem;
-                line-height: 9rem;
                 color: #000; border-radius: 2rem;",
             tabindex: -1,
             onmounted: onmounted,
             onkeydown: onkeydown,
 
             p {
+                style: "line-height: 9rem;",
                 "Click on the baby penguin, then click on the adult with the matching problem."
             },
 
             div {
                 style: "display: flex; flex-direction: row;",
                 div {
-                    style: "position: relative; top: 21rem;",
+                    style: "position: relative; top: 21rem; height: 30rem;",
                     BallInner {
                         tex: "3", selected: false
                     },
-                }
-                
-                div {
-                    style: "position: relative; top: 24rem; padding-right: 3rem;",
-                    img {  
-                        style: "width: 20rem;",
-                        src: asset!("/assets/images/right-arrow.svg")
-                    }
+                },
+
+                img {  
+                    src: asset!("/assets/images/right-arrow.svg"),
+                    style: "position: relative; top: 10rem; padding-right: 3rem; width: 20rem;",
                 }
 
                 BucketInner {
                     tex: "1 + 2"
-                }
+                },
             }
 
 
             p { 
+                style: "line-height: 12rem;",
                 button {
                     r#type: "button",
                     style: "width: 20rem; font-size: 5rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;",
