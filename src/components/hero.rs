@@ -1,7 +1,7 @@
 
 use dioxus::prelude::*;
 
-use crate::{components::{AudioIcon, AudioPreloader, Ball, BallSlot, Bucket, HelpIcon, Settings, SettingsIcon}, game::{Audio, Feedback, GameState, ScreenState, DEFAULT_FONT, NUM_BUCKETS}};
+use crate::{components::{AudioIcon, AudioPreloader, Ball, BallSlot, Bucket, Help, HelpIcon, Settings, SettingsIcon}, game::{Audio, Feedback, GameState, ScreenState, DEFAULT_FONT, NUM_BUCKETS}};
 
 #[component]
 pub fn Hero() -> Element {
@@ -87,6 +87,7 @@ pub fn Hero() -> Element {
 
                 HelpIcon {  
                     style: "position: absolute; left: 153rem; top: 87rem; width: 7rem; height: 11rem;",
+                    game_state: state,
                 },
 
                 SettingsIcon {  
@@ -95,6 +96,10 @@ pub fn Hero() -> Element {
                 },
             } else if state.read().screen_state == ScreenState::Settings {
                 Settings {
+                    game_state: state,
+                }
+            } else if state.read().screen_state == ScreenState::Help {
+                Help {
                     game_state: state,
                 }
             }

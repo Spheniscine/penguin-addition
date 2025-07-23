@@ -25,5 +25,8 @@ pub use audio_icon::AudioIcon;
 mod settings;
 pub use settings::Settings;
 
+mod help;
+pub use help::Help;
+
 mod hero;
 pub use hero::Hero;
