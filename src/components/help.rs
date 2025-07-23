@@ -3,7 +3,7 @@ use std::rc::Rc;
 use dioxus::{logger::tracing, prelude::*};
 use strum::IntoEnumIterator;
 
-use crate::game::{GameState, ScreenState};
+use crate::{components::{ball::BallInner, bucket::BucketInner, Ball}, game::{GameState, ScreenState}};
 
 #[component]
 pub fn Help(game_state: Signal<GameState>) -> Element {
@@ -39,8 +39,30 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
             onkeydown: onkeydown,
 
             p {
-                "TEST"
+                "Click on the baby penguin, then click on the adult with the matching problem."
             },
+
+            div {
+                style: "display: flex; flex-direction: row;",
+                div {
+                    style: "position: relative; top: 21rem;",
+                    BallInner {
+                        tex: "3", selected: false
+                    },
+                }
+                
+                div {
+                    style: "position: relative; top: 24rem; padding-right: 3rem;",
+                    img {  
+                        style: "width: 20rem;",
+                        src: asset!("/assets/images/right-arrow.svg")
+                    }
+                }
+
+                BucketInner {
+                    tex: "1 + 2"
+                }
+            }
 
 
             p { 
