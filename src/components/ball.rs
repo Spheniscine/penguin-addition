@@ -10,14 +10,25 @@ pub fn Ball(game_state: Signal<GameState>, index: usize) -> Element {
         game_state.write().click_ball(index);
         ev.stop_propagation();
     };
-    let selected_background = if state.selected_ball == Some(index) {
+    rsx! {
+        div {
+            onclick,
+            BallInner {
+                tex, selected: state.selected_ball == Some(index)
+            }
+        }
+    }
+}
+
+#[component]
+pub fn BallInner(tex: String, selected: bool) -> Element {
+    let selected_background = if selected {
         "filter: drop-shadow(0 0 2rem #ff0);"
     } else {
         ""
     };
     rsx! {
         div {
-            onclick,
             style: "position: relative; width: 35rem;",
             img { 
                 src: asset!("/assets/images/baby-penguin.svg"),

@@ -49,10 +49,19 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
     let audio_settings_changed = move |evt: Event<FormData>| {
         state.write().audio_state = evt.value().parse().unwrap_or(100);
     };
+
+    let do_ok = move |mut game_state: Signal<GameState>| {
+        let not_first = game_state.read().settings_cancelable;
+        game_state.write().apply_settings(state.read().clone());
+        if not_first {
+            game_state.write().screen_state = ScreenState::Game;
+        } else {
+            game_state.write().screen_state = ScreenState::Help;
+        }
+    };
     
     let mut ok = move |_| {
-        game_state.write().apply_settings(state.read().clone());
-        game_state.write().screen_state = ScreenState::Game;
+        do_ok(game_state.clone())
     };
     let mut cancel = move |_| {
         game_state.write().screen_state = ScreenState::Game;
@@ -69,8 +78,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
         let key = e.key();
         match key {
             Key::Enter => {
-                game_state.write().apply_settings(state.read().clone());
-                game_state.write().screen_state = ScreenState::Game;
+                do_ok(game_state.clone())
             }
             Key::Escape => {
                 if game_state.read().settings_cancelable {
