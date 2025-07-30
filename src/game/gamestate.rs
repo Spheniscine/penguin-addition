@@ -3,6 +3,8 @@ use dioxus::logger::tracing;
 use rand::{rng, seq::SliceRandom, Rng};
 use serde::{Deserialize, Serialize};
 
+use crate::Route;
+
 use super::{difficulty, Difficulty, Equation, Feedback, FeedbackImpl, Operator, SettingsState, NUM_BUCKETS};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -12,6 +14,7 @@ pub enum ScreenState {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameState {
+    pub route: Route,
     pub difficulty: Difficulty,
     pub equations: [Equation; NUM_BUCKETS], // questions for the buckets
     pub permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
@@ -24,7 +27,7 @@ pub struct GameState {
 }
 
 impl GameState {
-    pub fn test_generate() -> Self {
+    pub fn test_generate(route: Route) -> Self {
         let rng = &mut rng();
         let mut pool = (1..=9).collect::<Vec<_>>();
         let pool = pool.partial_shuffle(rng, NUM_BUCKETS).0;
@@ -42,6 +45,7 @@ impl GameState {
         permutation.shuffle(rng);
 
         Self {
+            route,
             difficulty: Difficulty::default(),
             equations: equations.into_inner().unwrap(),
             permutation: permutation.into_inner().unwrap(),

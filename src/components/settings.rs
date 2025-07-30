@@ -3,7 +3,7 @@ use std::rc::Rc;
 use dioxus::{logger::tracing, prelude::*};
 use strum::IntoEnumIterator;
 
-use crate::game::{Difficulty, Feedback, GameState, Operator, ScreenState, SettingsState};
+use crate::{game::{Difficulty, Feedback, GameState, Operator, ScreenState, SettingsState}, Route};
 
 #[component]
 pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, name: String, value: String, children: Element) -> Element {
@@ -106,74 +106,78 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
             tabindex: -1,
             onmounted: onmounted,
             onkeydown: onkeydown,
-
-            p {
-                class: "radio-buttons",
-                "Operation:",
-                for op in Operator::iter() {
-                    " ",
-                    RadioButton {  
-                        state, game_state,
-                        name: Difficulty::STR_OPERATOR,
-                        value: "{op}",
-                        "{op}",
-                    },
-                }
-            },
-
-            p {
-                class: "radio-buttons",
-                "Up to:",
-                for &mx in Difficulty::RESULT_MAXES {
-                    " ",
-                    RadioButton {  
-                        state, game_state,
-                        name: Difficulty::STR_MAX_RESULT,
-                        value: "{mx}",
-                        "{mx}",
-                    },
-                }
-            }
-
-            p {
-                class: "radio-buttons",
-                "{op_verb} how many:",
-                br {},
-                for x in 1..=addend_limit {
-                    " ",
-                    RadioButton {  
-                        state, game_state,
-                        name: Difficulty::STR_ADDEND_RANGE,
-                        value: "{x},{x}",
-                        "{op_sign}{x}",
-                    },
-                }
-
-                br {},
-
-                " ",
-                label {
-                    RadioButton {  
-                        state, game_state,
-                        name: Difficulty::STR_ADDEND_RANGE,
-                        value: "1,5",
-                        "{op_verb} 1 to 5",
-                    },
+            if game_state.read().route == Route::Default {
+                p {
+                    class: "radio-buttons",
+                    "Operation:",
+                    for op in Operator::iter() {
+                        " ",
+                        RadioButton {  
+                            state, game_state,
+                            name: Difficulty::STR_OPERATOR,
+                            value: "{op}",
+                            "{op}",
+                        },
+                    }
                 },
 
-                if addend_limit >= 10 {
+                p {
+                    class: "radio-buttons",
+                    "Up to:",
+                    for &mx in Difficulty::RESULT_MAXES {
+                        " ",
+                        RadioButton {  
+                            state, game_state,
+                            name: Difficulty::STR_MAX_RESULT,
+                            value: "{mx}",
+                            "{mx}",
+                        },
+                    }
+                }
+
+                p {
+                    class: "radio-buttons",
+                    "{op_verb} how many:",
+                    br {},
+                    for x in 1..=addend_limit {
+                        " ",
+                        RadioButton {  
+                            state, game_state,
+                            name: Difficulty::STR_ADDEND_RANGE,
+                            value: "{x},{x}",
+                            "{op_sign}{x}",
+                        },
+                    }
+
+                    br {},
+
                     " ",
                     label {
                         RadioButton {  
                             state, game_state,
                             name: Difficulty::STR_ADDEND_RANGE,
-                            value: "1,10",
-                            "{op_verb} 1 to 10",
+                            value: "1,5",
+                            "{op_verb} 1 to 5",
                         },
                     },
+
+                    if addend_limit >= 10 {
+                        " ",
+                        label {
+                            RadioButton {  
+                                state, game_state,
+                                name: Difficulty::STR_ADDEND_RANGE,
+                                value: "1,10",
+                                "{op_verb} 1 to 10",
+                            },
+                        },
+                    }
+                }
+            } else {
+                p {
+                    "TODO new addition skill levels"
                 }
             }
-            
 
             p { 
                 "Generate new problems: ",
