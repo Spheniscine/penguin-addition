@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use components::{Hero, Math};
+use serde::{Deserialize, Serialize};
 
 mod components;
 mod game;
@@ -13,8 +14,31 @@ fn main() {
     dioxus::launch(App);
 }
 
+#[derive(Routable, Clone, Debug, Serialize, Deserialize, PartialEq, Eq)]
+pub enum Route {
+    #[route("/")]
+    Default,
+    #[route("/addition")]
+    Addition,
+}
+
+#[component]
+fn Default() -> Element {
+    rsx! {
+        Hero { route: Route::Default }
+    }
+}
+
+#[component]
+fn Addition() -> Element {
+    rsx! {
+        Hero { route: Route::Addition }
+    }
+}
+
 #[component]
 fn App() -> Element {
+    
     rsx! {
         document::Link {
             rel: "stylesheet",
@@ -27,8 +51,7 @@ fn App() -> Element {
         document::Link { rel: "stylesheet", href: MAIN_CSS } 
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
         
-        Hero {}
-
+        Router::<Route> {}
     }
 }
 

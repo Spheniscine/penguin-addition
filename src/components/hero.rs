@@ -1,12 +1,12 @@
 
 use dioxus::prelude::*;
 
-use crate::{components::{AudioIcon, AudioPreloader, Ball, BallSlot, Bucket, Help, HelpIcon, Settings, SettingsIcon}, game::{Audio, Feedback, GameState, ScreenState, DEFAULT_FONT, NUM_BUCKETS}};
+use crate::{components::{AudioIcon, AudioPreloader, Ball, BallSlot, Bucket, Help, HelpIcon, Settings, SettingsIcon}, game::{Audio, Feedback, GameState, ScreenState, DEFAULT_FONT, NUM_BUCKETS}, Route};
 
 #[component]
-pub fn Hero() -> Element {
+pub fn Hero(route: Route) -> Element {
     let mut state = use_signal(|| {
-        GameState::test_generate()
+        GameState::test_generate(route.clone())
     });
 
     let click_check = move |_| {
