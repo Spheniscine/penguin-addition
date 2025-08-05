@@ -2,6 +2,17 @@ use indexmap::{IndexMap, indexmap};
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumIter, EnumString};
 
+#[derive(Debug, Clone, Copy, Display, Serialize, Deserialize, PartialEq, Eq)]
+pub enum Difficulty {
+    Legacy(LegacyDifficulty),
+    Addition(AdditionSkill),
+}
+
+#[derive(Debug, Clone, Copy, Display, EnumString, Default, Serialize, Deserialize, PartialEq, Eq)]
+pub enum AdditionSkill {
+    #[default] OneMore, TwoMore,
+}
+
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, EnumIter, Display, EnumString, PartialEq, Eq)]
 pub enum Operator {
     Plus, Minus
