@@ -3,7 +3,7 @@ use std::rc::Rc;
 use dioxus::{logger::tracing, prelude::*};
 use strum::IntoEnumIterator;
 
-use crate::{game::{Difficulty, Feedback, GameState, Operator, ScreenState, SettingsState}, Route};
+use crate::{game::{LegacyDifficulty, Feedback, GameState, Operator, ScreenState, SettingsState}, Route};
 
 #[component]
 pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, name: String, value: String, children: Element) -> Element {
@@ -13,9 +13,9 @@ pub fn RadioButton(state: Signal<SettingsState>, game_state: Signal<GameState>, 
     let onchange = move |_| {
         state.write().difficulty_options.insert(name_ref.to_string(), value_ref.to_string());
         let addend_limit = state.read().addend_limit();
-        let max_addend = state.read().difficulty_options[Difficulty::STR_ADDEND_RANGE].rsplit(',').next().unwrap().parse::<i32>().unwrap();
+        let max_addend = state.read().difficulty_options[LegacyDifficulty::STR_ADDEND_RANGE].rsplit(',').next().unwrap().parse::<i32>().unwrap();
         if max_addend > addend_limit { 
-            state.write().difficulty_options.insert(Difficulty::STR_ADDEND_RANGE.into(), "1,1".into());
+            state.write().difficulty_options.insert(LegacyDifficulty::STR_ADDEND_RANGE.into(), "1,1".into());
         }
         if state.read().difficulty_options != game_state.read().difficulty.to_map() {
             state.write().reset_level = true;
@@ -89,7 +89,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
         }
     };
 
-    let is_plus = state.read().difficulty_options[Difficulty::STR_OPERATOR] == "Plus";
+    let is_plus = state.read().difficulty_options[LegacyDifficulty::STR_OPERATOR] == "Plus";
     let op_sign = if is_plus {"+"} else {"−"};
     let op_verb = if is_plus {"Add"} else {"Subtract"};
     let addend_limit = state.read().addend_limit();
@@ -114,7 +114,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                         " ",
                         RadioButton {  
                             state, game_state,
-                            name: Difficulty::STR_OPERATOR,
+                            name: LegacyDifficulty::STR_OPERATOR,
                             value: "{op}",
                             "{op}",
                         },
@@ -124,11 +124,11 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                 p {
                     class: "radio-buttons",
                     "Up to:",
-                    for &mx in Difficulty::RESULT_MAXES {
+                    for &mx in LegacyDifficulty::RESULT_MAXES {
                         " ",
                         RadioButton {  
                             state, game_state,
-                            name: Difficulty::STR_MAX_RESULT,
+                            name: LegacyDifficulty::STR_MAX_RESULT,
                             value: "{mx}",
                             "{mx}",
                         },
@@ -143,7 +143,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                         " ",
                         RadioButton {  
                             state, game_state,
-                            name: Difficulty::STR_ADDEND_RANGE,
+                            name: LegacyDifficulty::STR_ADDEND_RANGE,
                             value: "{x},{x}",
                             "{op_sign}{x}",
                         },
@@ -155,7 +155,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                     label {
                         RadioButton {  
                             state, game_state,
-                            name: Difficulty::STR_ADDEND_RANGE,
+                            name: LegacyDifficulty::STR_ADDEND_RANGE,
                             value: "1,5",
                             "{op_verb} 1 to 5",
                         },
@@ -166,7 +166,7 @@ pub fn Settings(game_state: Signal<GameState>) -> Element {
                         label {
                             RadioButton {  
                                 state, game_state,
-                                name: Difficulty::STR_ADDEND_RANGE,
+                                name: LegacyDifficulty::STR_ADDEND_RANGE,
                                 value: "1,10",
                                 "{op_verb} 1 to 10",
                             },
