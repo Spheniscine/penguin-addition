@@ -1,7 +1,7 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-use super::Difficulty;
+use super::LegacyDifficulty;
 
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -13,6 +13,6 @@ pub struct SettingsState {
 
 impl SettingsState {
     pub fn addend_limit(&self) -> i32 {
-        if self.difficulty_options[Difficulty::STR_MAX_RESULT].parse::<i32>().unwrap() > 10 {10} else {5}
+        if self.difficulty_options[LegacyDifficulty::STR_MAX_RESULT].parse::<i32>().unwrap() > 10 {10} else {5}
     }
 }

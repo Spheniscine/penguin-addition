@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::Route;
 
-use super::{difficulty, Difficulty, Equation, Feedback, FeedbackImpl, Operator, SettingsState, NUM_BUCKETS};
+use super::{difficulty, LegacyDifficulty, Equation, Feedback, FeedbackImpl, Operator, SettingsState, NUM_BUCKETS};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum ScreenState {
@@ -15,7 +15,7 @@ pub enum ScreenState {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GameState {
     pub route: Route,
-    pub difficulty: Difficulty,
+    pub difficulty: LegacyDifficulty,
     pub equations: [Equation; NUM_BUCKETS], // questions for the buckets
     pub permutation: [usize; NUM_BUCKETS], // the displayed order of the balls
     pub assignment: [Option<usize>; NUM_BUCKETS], // which balls are in each bucket
@@ -46,7 +46,7 @@ impl GameState {
 
         Self {
             route,
-            difficulty: Difficulty::default(),
+            difficulty: LegacyDifficulty::default(),
             equations: equations.into_inner().unwrap(),
             permutation: permutation.into_inner().unwrap(),
             assignment: [None; NUM_BUCKETS],
@@ -113,7 +113,7 @@ impl GameState {
     pub fn apply_settings(&mut self, settings: SettingsState) {
         self.feedback.set_audio_state(settings.audio_state as f64 / 100.);
 
-        let Some(difficulty) = Difficulty::from_map(&settings.difficulty_options) else {
+        let Some(difficulty) = LegacyDifficulty::from_map(&settings.difficulty_options) else {
             tracing::error!("error parsing settings difficulty map");
             return
         };
@@ -122,7 +122,7 @@ impl GameState {
         }
     }
 
-    pub fn generate(&mut self, difficulty: Difficulty) {
+    pub fn generate(&mut self, difficulty: LegacyDifficulty) {
         self.difficulty = difficulty;
         self.assignment = [None; NUM_BUCKETS];
         self.selected_ball = None;
