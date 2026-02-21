@@ -7,8 +7,10 @@ mod game;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const HEADER_SVG: Asset = asset!("/assets/header.svg");
-const MAIN_CSS: &str = include_str!("../assets/main.css");
-const TAILWIND_CSS: &str = include_str!("../assets/tailwind.css");
+
+// string inclusion is used to prevent FOUC
+const MAIN_CSS: &str = const_css_minify::minify!("../assets/main.css");
+const TAILWIND_CSS: &str = const_css_minify::minify!("../assets/tailwind.css");
 
 fn main() {
     dioxus::launch(App);
